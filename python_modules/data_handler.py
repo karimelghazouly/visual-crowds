@@ -16,7 +16,7 @@ def get_adress_and_city(lat, lng):
 
 def read_fill_person_geo():
     """Reads csv file of user's geo information and adds city and street."""
-    csv = pd.read_csv('D:/Projects/test.csv')
+    csv = pd.read_csv('csv_work/geo_data.csv')
 
     # Add street and city based on latitude and longitude
     for i in range(0,len(csv)):
@@ -26,5 +26,9 @@ def read_fill_person_geo():
 
         csv.loc[i,'city'] = city
         csv.loc[i, 'street'] = street
+    csv.to_csv('csv_work/geo_data.csv')
+    return csv
+
+read_fill_person_geo()
 
 
