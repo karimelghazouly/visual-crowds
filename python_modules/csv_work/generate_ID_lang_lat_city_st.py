@@ -1,17 +1,20 @@
 from faker import Faker
-import pandas as pd
 import csv
 from Generator import lng_lat
-#makka
-land = [[21.422487,39.826206]]
+#makka 3arf mozdlifa mena
+land = [[21.422487,39.826206], [21.3549, 39.9841], [21.231979,39.56959],[21.4146,39.8946]]
 fake = Faker('ar_SA')
-latitude,longitude = lng_lat(land[0][0],land[0][1])
-with open('Test.csv', 'w') as csvfile:
-    fieldnames = ['id', 'lat', 'long','city','st']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+x=0
+for i in range(3):
+    latitude,longitude = lng_lat(land[i][0],land[i][1])
+    print(len(latitude))
+    with open('geo_data.csv', 'a') as csvfile:
+        fieldnames = ['id', 'lat', 'long', 'city', 'street']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        #writer.writeheader()
 
-    writer.writeheader()
-    for i in range(1,10):
-        writer.writerow({'id': str(i), 'lat': str(latitude[i]), 'long': str(longitude[i])})
+        for i in range(0,10):
+            writer.writerow({'id': str(x), 'lat': str(latitude[i]), 'long': str(longitude[i])})
+            x+=1
 
 print("Writing complete")
