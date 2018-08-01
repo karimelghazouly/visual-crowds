@@ -16,12 +16,3 @@ ui <- fluidPage(
       )
    )
 )
-
-server <- function(input, output) {
-   
-   output$distPlot <- renderPlot({
-      
-   })
-}
-shinyApp(ui = ui, server = server)
-
