@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1533134888330.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "892E61ED",
+    "lastKnownWriteTime" : 1533135764,
+    "last_content_update" : 1533135764611,
+    "path" : "~/WorkSpace/R/Visual Crowds/Hajj Hackathon/app.R",
+    "project_path" : "app.R",
+    "properties" : {
+        "cursorPosition" : "2,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
