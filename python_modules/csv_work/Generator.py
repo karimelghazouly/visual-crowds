@@ -11,8 +11,11 @@ def lng_lat(lat,lngg):
     Return points around a cretian area on a map
     :return: Two lists of lng and lat
     '''
-    lng =list()
-    latt=list()
+    global lng
+    global latt
+    lng = list()
+    latt= list()
+
     p = shapely.geometry.Point([lat,lngg])
     n_points = 10
     d = 10 * 10  # meters
