@@ -1,8 +1,9 @@
 import pandas as pd
 import csv
 
-def compare_place_to_people_in():
-    Geo = pd.read_csv('geo_data.csv')
+
+def compare_place_to_people_in(data):
+    Geo = data
     city = Geo.iloc[:,3]
     print(city)
 

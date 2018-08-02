@@ -17,8 +17,8 @@ def lng_lat(lat,lngg):
     latt= list()
 
     p = shapely.geometry.Point([lat,lngg])
-    n_points = 10
-    d = 10 * 10  # meters
+    n_points = 1000
+    d = 10 * 30  # meters
     angles = np.linspace(0, 360, n_points)
     polygon = geog.propagate(p, angles, d)
     all_points=json.dumps(shapely.geometry.mapping(shapely.geometry.Polygon(polygon)))
