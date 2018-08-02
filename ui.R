@@ -7,10 +7,12 @@ library(gapminder)
 library(leaflet)
 library(profvis)
 source_python('python_modules/data_handler.py')
+source_python('python_modules/csv_work/table_comper_places.py')
 ui <- fluidPage(
   theme='theme.css',
   includeCSS('www/styles.css'),
   h1('Visual Crowds',style='margin-left:45%',class="text-success"),
+  actionButton('insert','insert'),
   tabsetPanel(id='tabs',
               tabPanel(h4('Street View'),
                        actionButton('OverAll',h3('OverAll'),class="btn btn-primary"),
@@ -27,17 +29,28 @@ ui <- fluidPage(
               )
   ),
   div( class='jumbotron',style="margin-top:5%;",
-       p('Insights',class='text-success'),
-       div(class="card text-white bg-danger mb-3",
-           style="max-width: 20rem; border-radius:10px;",
-           div(class="card-body",
-               h4(class="card-title",icon('exclamation-triangle',lib = "font-awesome",class="fa-2x"),"Makkah"),
-               p(class="card-text","There is more than 2 milion people in makkah right now")
-               ),
-           actionButton('W1','View',style="margin-left:40%;")
-           )
+       fixedRow(
+         column(4,
+                p('Warnings',class='text-danger'),
+                uiOutput('warn')         
+                ),
+         column(6,
+                p('Insights',class='text-success'),
+                uiOutput('insights')
+                )
+       )
+       
 
   )
   
   
 )
+
+# div(class="card text-white bg-danger mb-3",
+#     style="max-width: 20rem; border-radius:10px;",
+#     div(class="card-body",
+#         h4(class="card-title",icon('exclamation-triangle',lib = "font-awesome",class="fa-2x"),"Makkah"),
+#         p(class="card-text","There is more than 2 milion people in makkah right now")
+#     ),
+#     actionButton('W1','View',style="margin-left:40%;")
+# )
