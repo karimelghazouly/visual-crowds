@@ -1,4 +1,8 @@
 v<-reactiveValues(l1=39.7,lo1=21.3,l2=39.9,lo2=21.5)
+source_python('python_modules/data_handler.py')
+MyData <- read.csv(file="/home/karim/WorkSpace/R/Visual Crowds/Hajj Hackathon/python_modules/csv_work/Info.csv", header=TRUE, sep=",")
+leng = nrow(MyData)
+
 server <- function(input, output,session) {
   observeEvent(input[["Makka"]],{
     v[["l1"]] =39.825000
@@ -46,13 +50,21 @@ server <- function(input, output,session) {
     })
     output$street<-renderLeaflet({
       data <- read.csv(file="/home/karim/geo_data.csv", header=TRUE, sep=",")
-      #print(data)
-      #print(data[['long']])
       m <- leaflet()
       m <- addTiles(m)
       m <- addMarkers(m, lng=data[['long']], lat=data[['lat']], popup=data[['long']],   clusterOptions = markerClusterOptions())
-      #m <- setView(m,21.422487,39.826206,zoom = 10)
       m <-fitBounds(m,v[["l1"]],v[["lo1"]],v[["l2"]],v[["lo2"]])
       return(m)
+    })
+    output$piligrim<-renderLeaflet({
+      id=as.numeric(input[["input-srch"]])
+      if(!is.na(id)&&!is.null(id)&&id<=leng)
+      {
+        loc=get_location_by_id(id)
+        loc=unlist(loc)
+        m <- leaflet()
+        m <- addTiles(m)
+        m <- addMarkers(m, lng=loc[2], lat=loc[1], popup=id)
+      }
     })
 }
