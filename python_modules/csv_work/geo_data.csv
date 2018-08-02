@@ -1,41 +1,41 @@
 id,lat,lng,city,street
-0,21.42365801,39.82620599,"Mecca 24231, Saudi Arabia","4280 باب العمرة، Harat Al Bab and Ash Shamiyyah, Makkah 24231 7499, Saudi Arabia"
-1,21.42338405,39.82678407,"Mecca 24231, Saudi Arabia","4256 King Abdul Aziz Rd, Mecca 24231 7250, Saudi Arabia"
-2,21.42269035,39.82709166,"Mecca 24231, Saudi Arabia","Safa Bridge, Ajyad, Mecca 24231, Saudi Arabia"
-3,21.42190149,39.82698483,"Mecca 24231, Saudi Arabia","Safa Bridge, Ajyad, Mecca 24231, Saudi Arabia"
-4,21.42138661,39.82651358,"Mecca 24231, Saudi Arabia","Safa Bridge, Ajyad, Mecca 24231, Saudi Arabia"
-5,21.42138662,39.82589841,"Mecca 24231, Saudi Arabia","Ajyad Bridge, Ajyad, Mecca 24231, Saudi Arabia"
-6,21.4219015,39.82542716,"Mecca 24231, Saudi Arabia","4256 King Abdul Aziz Rd, Mecca 24231 7250, Saudi Arabia"
-7,21.42269034,39.82532034,"Mecca 24231, Saudi Arabia","4256 King Abdul Aziz Rd, Mecca 24231 7250, Saudi Arabia"
-8,21.42338404,39.82562792,"Mecca 24231, Saudi Arabia","4256 King Abdul Aziz Rd, Mecca 24231 7250, Saudi Arabia"
-9,21.42365801,39.82620599,"Mecca 24231, Saudi Arabia","4280 باب العمرة، Harat Al Bab and Ash Shamiyyah, Makkah 24231 7499, Saudi Arabia"
-10,21.35607371,39.98409999,"Al Mashair, Mecca 24256, Saudi Arabia","Pedestrian path, Al Mashair, Mecca 24256, Saudi Arabia"
-11,21.35579912,39.98467807,"Al Mashair, Mecca 24256, Saudi Arabia","Pedestrian path, Al Mashair, Mecca 24256, Saudi Arabia"
-12,21.35510381,39.98498566,"Al Mashair, Mecca 24256, Saudi Arabia","Pedestrian path, Al Mashair, Mecca 24256, Saudi Arabia"
-13,21.35431314,39.98487883,"Al Mashair, Mecca 24256, Saudi Arabia","3814, Al Mashair, Mecca 24258 9085, Saudi Arabia"
-14,21.35379707,39.98440758,"Al Mashair, Mecca 24256, Saudi Arabia","Pedestrian path, Al Mashair, Mecca 24256, Saudi Arabia"
-15,21.35379708,39.98379241,"Al Mashair, Mecca 24256, Saudi Arabia","Pedestrian path, Al Mashair, Mecca 24256, Saudi Arabia"
-16,21.35431315,39.98332116,"Al Mashair, Mecca 24256, Saudi Arabia","3613, Al Mashair, Mecca 24258 9188, Saudi Arabia"
-17,21.35510381,39.98321434,"Al Mashair, Mecca 24256, Saudi Arabia","3613, Al Mashair, Mecca 24258 9188, Saudi Arabia"
-18,21.355799100000002,39.98352192,"Al Mashair, Mecca 24256, Saudi Arabia","Pedestrian path, Al Mashair, Mecca 24256, Saudi Arabia"
-19,21.35607371,39.98409999,"Al Mashair, Mecca 24256, Saudi Arabia","Pedestrian path, Al Mashair, Mecca 24256, Saudi Arabia"
-20,21.23314566,39.56958999,"24515, Saudi Arabia","Unnamed Road 24514, Saudi Arabia"
-21,21.23287272,39.57016807,"24515, Saudi Arabia",304 Saudi Arabia
-22,21.23218159,39.57047566,"24515, Saudi Arabia",Unnamed Road Saudi Arabia
-23,21.23139566,39.57036883,"24515, Saudi Arabia",Unnamed Road Saudi Arabia
-24,21.23088269,39.56989758,"24515, Saudi Arabia",Unnamed Road Saudi Arabia
-25,21.2308827,39.56928241,"24515, Saudi Arabia",Unnamed Road Saudi Arabia
-26,21.23139568,39.56881116,"24515, Saudi Arabia",Unnamed Road Saudi Arabia
-27,21.23218159,39.56870434,"24515, Saudi Arabia",Unnamed Road Saudi Arabia
-28,21.23287271,39.56901192,"24515, Saudi Arabia",Unnamed Road Saudi Arabia
-29,21.23314566,39.56958999,"24515, Saudi Arabia","Unnamed Road 24514, Saudi Arabia"
-30,21.41577217,39.89459999,"Al Mashair, Mecca 24248, Saudi Arabia","6575 Street 608, Al Mashair, Mecca 24248, Saudi Arabia"
-31,21.41549794,39.89517807,"Al Mashair, Mecca 24248, Saudi Arabia","King Abdullah Rd, Al Mashair, Mecca 24248, Saudi Arabia"
-32,21.41480355,39.89548566,"Al Mashair, Mecca 24248, Saudi Arabia","3259 Street 608, Al Mashair, Mecca 24248 6417, Saudi Arabia"
-33,21.41401391,39.89537883,"Al Mashair, Mecca 24248, Saudi Arabia","King Fahd Rd & Rd 25, Al Mashair, Mecca 24248, Saudi Arabia"
-34,21.41349851,39.89490758,"Al Mashair, Mecca 24248, Saudi Arabia","3228 Rd 68 (King Fahd Road), Al Mashair, Makkah 24248 6296, Saudi Arabia"
-35,21.41349852,39.89429241,"Al Mashair, Mecca 24248, Saudi Arabia","King Fahd Rd, Al Mashair, Mecca 24248, Saudi Arabia"
-36,21.41401392,39.89382116,"Al Mashair, Mecca 24248, Saudi Arabia","King Abdullah Rd, Al Mashair, Mecca 24248, Saudi Arabia"
-37,21.41480354,39.89371434,"Al Mashair, Mecca 24248, Saudi Arabia","3107 Street 214, Al Mashair, Makkah 24248 6419, Saudi Arabia"
-38,21.41549793,39.89402192,"Al Mashair, Mecca 24248, Saudi Arabia","6500 Street 606, Al Mashair, Makkah 24248 3133, Saudi Arabia"
-39,21.41577217,39.89459999,"Al Mashair, Mecca 24248, Saudi Arabia","6575 Street 608, Al Mashair, Mecca 24248, Saudi Arabia"
+0,21.42365800590136,39.826205994114076,makka,
+1,21.423384050111324,39.82678406933136,makka,
+2,21.422690345662126,39.827091658712476,makka,
+3,21.421901490411923,39.8269848338854,makka,
+4,21.4213866094692,39.82651358090712,makka,
+5,21.42138661932191,39.82589840869809,makka,
+6,21.421901503686446,39.825427163171646,makka,
+7,21.42269034041961,39.82532034093256,makka,
+8,21.4233840350161,39.82562792376064,makka,
+9,21.42365800590136,39.826205994114076,makka,
+10,21.356073707719695,39.98409999408103,arafa,
+11,21.355799119884143,39.98467806931197,arafa,
+12,21.35510381484876,39.98498565871148,arafa,
+13,21.35431313945008,39.98487883387713,arafa,
+14,21.35379707055135,39.984407580877935,arafa,
+15,21.353797080482252,39.9837924086689,arafa,
+16,21.354313152829945,39.98332116316339,arafa,
+17,21.35510380956464,39.98321434093157,arafa,
+18,21.355799104669124,39.98352192374124,arafa,
+19,21.356073707719695,39.98409999408103,arafa,
+20,21.233145660069084,39.56958999416749,mena,
+21,21.232872720914433,39.5701680693627,mena,
+22,21.232181590982854,39.57047565871409,mena,
+23,21.231395663412684,39.570368833898755,mena,
+24,21.23088269327853,39.56989758095428,mena,
+25,21.230882703005626,39.56928240874524,mena,
+26,21.231395676517963,39.568811163184996,mena,
+27,21.232181585807172,39.568704340934175,mena,
+28,21.23287270601166,39.569011923791976,mena,
+29,21.233145660069084,39.56958999416749,mena,
+30,21.415772173610517,39.89459999409978,muzdalifah,
+31,21.415497944654316,39.895178069322974,muzdalifah,
+32,21.414803548441682,39.89548565871203,muzdalifah,
+33,21.414013906534585,39.89537883388181,muzdalifah,
+34,21.41349851216463,39.89490758089449,muzdalifah,
+35,21.413498522051125,39.89429240868545,muzdalifah,
+36,21.41401391985462,39.89382116316807,muzdalifah,
+37,21.41480354318119,39.89371434093213,muzdalifah,
+38,21.415497929507328,39.89402192375224,muzdalifah,
+39,21.415772173610517,39.89459999409978,muzdalifah,
