@@ -18,7 +18,7 @@ def get_adress_and_city(lat, lng):
     return address[0]['formatted_address'], address[length - 3]['formatted_address'] #address[0]['address_components'][2]['short_name']
 
 def read_fill_person_geo():
-    """Reads and returns csv file of user's geo information and adds city and street."""
+    """Reads csv file of user's geo information and adds city and street."""
     csv = pd.read_csv('csv_work/geo_data.csv')
 
     # Add street and city based on latitude and longitude
@@ -35,8 +35,8 @@ def read_fill_person_geo():
     return csv
 
 def manipulate_geo_data():
-    """Shuffles data locations and returns rendered file."""
-    csv = pd.read_csv('csv_work/geo_data.csv')
+    """Shuffles data locations."""
+    csv = pd.read_csv('python_modules/csv_work/geo_data.csv')
 
     for i in range(0, len(csv)):
         # Swap current row's location with random row
@@ -44,8 +44,7 @@ def manipulate_geo_data():
         csv.loc[i,'lat'], csv.loc[rand_no, 'lat'] = csv.loc[rand_no, 'lat'], csv.loc[i,'lat']
         csv.loc[i, 'lng'], csv.loc[rand_no, 'lng'] = csv.loc[rand_no, 'lng'], csv.loc[i, 'lng']
 
-    csv.to_csv('csv_work/geo_data.csv')
-    return csv
+    csv.to_csv('python_modules/csv_work/geo_data.csv')
 
 def get_location_by_name(name):
     """Returns location of a user given his name.
