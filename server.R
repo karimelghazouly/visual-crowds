@@ -49,22 +49,38 @@ server <- function(input, output,session) {
        return(p)
     })
     output$street<-renderLeaflet({
-      data <- read.csv(file="/home/karim/geo_data.csv", header=TRUE, sep=",")
+      data <- read.csv(file="python_modules/csv_work/geo_data.csv", header=TRUE, sep=",")
+      print(data)
       m <- leaflet()
       m <- addTiles(m)
-      m <- addMarkers(m, lng=data[['long']], lat=data[['lat']], popup=data[['long']],   clusterOptions = markerClusterOptions())
+      m <- addMarkers(m, lng=data[['lng']], lat=data[['lat']], popup=data[['long']],   clusterOptions = markerClusterOptions())
       m <-fitBounds(m,v[["l1"]],v[["lo1"]],v[["l2"]],v[["lo2"]])
       return(m)
     })
     output$piligrim<-renderLeaflet({
-      id=as.numeric(input[["input-srch"]])
-      if(!is.na(id)&&!is.null(id)&&id<=leng)
+      if(input[["search_choice"]]=="ID")
       {
-        loc=get_location_by_id(id)
-        loc=unlist(loc)
-        m <- leaflet()
-        m <- addTiles(m)
-        m <- addMarkers(m, lng=loc[2], lat=loc[1], popup=id)
+        id=as.numeric(input[["input-srch"]])
+        if(!is.na(id)&&!is.null(id)&&id<=leng)
+        {
+          loc=get_location_by_id(id)
+          loc=unlist(loc)
+          m <- leaflet()
+          m <- addTiles(m)
+          m <- addMarkers(m, lng=loc[2], lat=loc[1], popup=id)
+        }
+      }
+      else
+      {
+        name=input[["input-srch"]]
+        if(!is.na(name)&&!is.null(name)&&name!=''&&is.na(as.numeric(name)))
+        {
+          loc=get_location_by_name(name)
+          loc=unlist(loc)
+          m <- leaflet()
+          m <- addTiles(m)
+          m <- addMarkers(m, lng=loc[2], lat=loc[1], popup=name)
+        }
       }
     })
 }
