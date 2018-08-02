@@ -39,11 +39,14 @@ def manipulate_geo_data():
     """Shuffles data locations."""
     csv = pd.read_csv('python_modules/csv_work/geo_data.csv')
 
-    for i in range(0, len(csv)):
-        # Swap current row's location with random row
-        rand_no = random.randint(0,len(csv)-1)
-        csv.loc[i,'lat'], csv.loc[rand_no, 'lat'] = csv.loc[rand_no, 'lat'], csv.loc[i,'lat']
-        csv.loc[i, 'lng'], csv.loc[rand_no, 'lng'] = csv.loc[rand_no, 'lng'], csv.loc[i, 'lng']
+    # Generate a list of unique random numbers
+    randoms = random.sample(range(0,1999), 500)
+    for i in randoms:
+        rand_index = random.randint(0,1999)
+        # Add location data of i in the random index
+        csv.loc[i,'lat'] = csv.loc[rand_index, 'lat']
+        csv.loc[i, 'lng'] = csv.loc[rand_index, 'lng']
+        csv.loc[i, 'city'] = csv.loc[rand_index, 'city']
 
     csv.set_index('id', inplace=True)
     csv.to_csv('python_modules/csv_work/geo_data.csv')
@@ -118,4 +121,4 @@ def add_places_capacity(type, lat, lng):
     return places
 
 
-#add_places_capacity('hospital', 21.422487, 39.826206)
+
