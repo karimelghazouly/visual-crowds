@@ -12,7 +12,8 @@ def get_adress_and_city(lat, lng):
     address = api.reverse_geocode({'lat':lat, 'lng':lng})
 
     # Return street address and city name
-    return address[0]['formatted_address'], address[0]['address_components'][2]['short_name']
+    length = len(address)
+    return address[0]['formatted_address'], address[length - 3]['formatted_address'] #address[0]['address_components'][2]['short_name']
 
 def read_fill_person_geo():
     """Reads csv file of user's geo information and adds city and street."""
@@ -28,6 +29,7 @@ def read_fill_person_geo():
         csv.loc[i, 'street'] = street
     csv.to_csv('csv_work/geo_data.csv')
     return csv
+
 
 read_fill_person_geo()
 
