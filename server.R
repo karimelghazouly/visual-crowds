@@ -1,13 +1,55 @@
 v<-reactiveValues(l1=39.7,lo1=21.3,l2=39.9,lo2=21.5)
 source_python('python_modules/data_handler.py')
+source_python('python_modules/csv_work/table_comper_places.py')
 MyData <- read.csv(file="/home/karim/WorkSpace/R/Visual Crowds/Hajj Hackathon/python_modules/csv_work/Info.csv", header=TRUE, sep=",")
 leng = nrow(MyData)
+idx=1
 personIcon=makeIcon(
   iconUrl = 'www/icons/circle1.png',
   iconWidth = 10, iconHeight = 10
 )
+
+find_warning = function()
+{
+  prob=compare_place_to_people_in()
+  for(i in prob)
+  {
+    add_warning(i[[1]],i[[2]],i[[3]])
+  }
+}
+
+remove_old_warn = function()
+{
+  for(i in 1:(idx-1))
+  {
+    sel=paste("#warn",i,sep='')
+    removeUI(
+      selector = sel
+    )    
+  }
+  idx<<-1
+}
+
+add_warning=function(place,max,cur)
+{
+  insertUI(
+    selector = "#warn",
+    where = "afterEnd",
+    ui=div(class="card text-white bg-danger mb-3",
+           style="max-width: 20rem; border-radius:10px; margin-left:25px;",
+           div(class="card-body",
+               h4(class="card-title",icon('exclamation-triangle',lib = "font-awesome",class="fa-2x"),place),
+               p(class="card-text",paste(place,' can only handle',max,'and now it has',cur,'pilgrim please consider taking an action as soon as possible to avoid over crowding'))
+           ),
+           actionButton('W1','View',style="margin-left:40%;"),
+    id=paste('warn',idx,sep='')
+    )
+  )
+  print(paste('warn',idx,sep=''))
+  idx<<-idx+1
+}
 server <- function(input, output,session) {
-  autoInvalidate <- reactiveTimer(200)
+  autoInvalidate <- reactiveTimer(2000)
   observeEvent(input[["Makka"]],{
     v[["l1"]] =39.825000
     v[["lo1"]] =21.421300
@@ -33,7 +75,10 @@ server <- function(input, output,session) {
     v[["l2"]] =39.9
     v[["lo2"]] =21.5
   })
-    output$visual<-renderPlotly({
+  observeEvent(input[["insert"]],{
+    
+  })
+  output$visual<-renderPlotly({
       MyData <- read.csv(file="/home/karim/geo_data.csv", header=TRUE, sep=",")
        testing = data.frame( 
          id = c(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4),
@@ -51,9 +96,11 @@ server <- function(input, output,session) {
        p <- ggplotly(p)
        return(p)
     })
-    output$street<-renderLeaflet({
+  output$street<-renderLeaflet({
+      remove_old_warn()
+      find_warning()
       autoInvalidate()
-      manipulate_geo_data()
+      #manipulate_geo_data()
       data <- read.csv(file="python_modules/csv_work/geo_data.csv", header=TRUE, sep=",")
       #print(data)
       m <- leaflet()
@@ -64,7 +111,7 @@ server <- function(input, output,session) {
       m <- fitBounds(m,v[["l1"]],v[["lo1"]],v[["l2"]],v[["lo2"]])
       return(m)
     })
-    output$piligrim<-renderLeaflet({
+  output$piligrim<-renderLeaflet({
       if(input[["search_choice"]]=="ID")
       {
         id=as.numeric(input[["input-srch"]])
@@ -90,4 +137,5 @@ server <- function(input, output,session) {
         }
       }
     })
+  
 }
