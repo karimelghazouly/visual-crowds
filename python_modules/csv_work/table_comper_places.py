@@ -1,5 +1,6 @@
 import pandas as pd
 import csv
+s = pd.read_csv('geo_data.csv')
 
 
 def compare_place_to_people_in(data):
@@ -34,3 +35,5 @@ def compare_place_to_people_in(data):
             if f==3:
                 print("overflow in muzdalifah")
 
+
+compare_place_to_people_in(s)
