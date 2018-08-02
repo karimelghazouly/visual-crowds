@@ -1,5 +1,6 @@
-import googlemaps as gmaps
+#import googlemaps as gmaps
 import pandas as pd
+import os
 import random
 import mpu
 
@@ -18,7 +19,7 @@ def get_adress_and_city(lat, lng):
     return address[0]['formatted_address'], address[length - 3]['formatted_address'] #address[0]['address_components'][2]['short_name']
 
 def read_fill_person_geo():
-    """Reads and returns csv file of user's geo information and adds city and street."""
+    """Reads csv file of user's geo information and adds city and street."""
     csv = pd.read_csv('csv_work/geo_data.csv')
 
     # Add street and city based on latitude and longitude
@@ -35,8 +36,8 @@ def read_fill_person_geo():
     return csv
 
 def manipulate_geo_data():
-    """Shuffles data locations and returns rendered file."""
-    csv = pd.read_csv('csv_work/geo_data.csv')
+    """Shuffles data locations."""
+    csv = pd.read_csv('python_modules/csv_work/geo_data.csv')
 
     # Generate a list of unique random numbers
     randoms = random.sample(range(0,1999), 500)
@@ -48,7 +49,7 @@ def manipulate_geo_data():
         csv.loc[i, 'city'] = csv.loc[rand_index, 'city']
 
     csv.set_index('id', inplace=True)
-    csv.to_csv('csv_work/geo_data.csv')
+    csv.to_csv('python_modules/csv_work/geo_data.csv')
     return csv
 
 def get_location_by_name(name):
@@ -56,9 +57,10 @@ def get_location_by_name(name):
     :param name: String of the user's full name.
     :return: Pair of (latitude, longitude).
     """
-    info_csv = pd.read_csv('csv_work/info.csv')
-    geo_csv = pd.read_csv('csv_work/geo_data.csv')
-
+    info_csv = pd.read_csv('python_modules/csv_work/Info.csv')
+    # Get user's id from info file
+    geo_csv = pd.read_csv('python_modules/csv_work/geo_data.csv')
+    
     # Get user's id from info file
     id = info_csv.loc[info_csv['name'] == name]['id'].values[0]
 
@@ -73,7 +75,7 @@ def get_location_by_id(id):
     :param id: Integer of the user's id
     :return: Pair of (latitude, longitude).
     """
-    geo_csv = pd.read_csv('csv_work/geo_data.csv')
+    geo_csv = pd.read_csv('python_modules/csv_work/geo_data.csv')
 
     # Get lat and lng from geo_data file using user's id
     lat = geo_csv.loc[geo_csv['id'] == id]['lat'][id]
