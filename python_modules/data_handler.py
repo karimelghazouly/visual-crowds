@@ -1,5 +1,6 @@
-import googlemaps as gmaps
+#import googlemaps as gmaps
 import pandas as pd
+import os
 
 def get_adress_and_city(lat, lng):
     """Returns street address of the given location.
@@ -37,12 +38,12 @@ def get_location_by_name(name):
     :param name: String of the user's full name.
     :return: Pair of (latitude, longitude).
     """
-    info_csv = pd.read_csv('csv_work/info.csv')
+    info_csv = pd.read_csv('python_modules/csv_work/Info.csv')
     # Get user's id from info file
     id = info_csv.loc[info_csv['name'] == 'ahmad']['id'].values[0]
-
-    geo_csv = pd.read_csv('csv_work/geo_data.csv')
-
+    print(id)
+    geo_csv = pd.read_csv('python_modules/csv_work/geo_data.csv')
+    
     # Get lat and lng from geo_data file using user's id
     lat = geo_csv.loc[geo_csv['id'] == id]['lat'][id]
     lng = geo_csv.loc[geo_csv['id'] == id]['lng'][id]
@@ -54,7 +55,7 @@ def get_location_by_id(id):
     :param id: Integer of the user's id
     :return: Pair of (latitude, longitude).
     """
-    geo_csv = pd.read_csv('csv_work/geo_data.csv')
+    geo_csv = pd.read_csv('python_modules/csv_work/geo_data.csv')
 
     # Get lat and lng from geo_data file using user's id
     lat = geo_csv.loc[geo_csv['id'] == id]['lat'][id]
