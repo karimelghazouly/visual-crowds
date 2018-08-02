@@ -4,6 +4,7 @@ source_python('python_modules/csv_work/table_comper_places.py')
 MyData <- read.csv(file="/home/karim/WorkSpace/R/Visual Crowds/Hajj Hackathon/python_modules/csv_work/Info.csv", header=TRUE, sep=",")
 leng = nrow(MyData)
 idx=1
+useShinyjs()
 personIcon=makeIcon(
   iconUrl = 'www/icons/circle1.png',
   iconWidth = 10, iconHeight = 10
@@ -45,11 +46,14 @@ add_warning=function(place,max,cur)
     id=paste('warn',idx,sep='')
     )
   )
-  print(paste('warn',idx,sep=''))
   idx<<-idx+1
 }
 server <- function(input, output,session) {
-  autoInvalidate <- reactiveTimer(2000)
+  observe({
+    if(input[["tabs"]]=="<h4>Facilities</h4>")hide('anal')
+    else show('anal')
+  })
+  autoInvalidate <- reactiveTimer(5000)
   observeEvent(input[["Makka"]],{
     v[["l1"]] =39.825000
     v[["lo1"]] =21.421300
@@ -76,26 +80,18 @@ server <- function(input, output,session) {
     v[["lo2"]] =21.5
   })
   observeEvent(input[["insert"]],{
-    
   })
-  output$visual<-renderPlotly({
-      MyData <- read.csv(file="/home/karim/geo_data.csv", header=TRUE, sep=",")
-       testing = data.frame( 
-         id = c(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4),
-         lat = c(1, 2, 3, 4, 5, 6, 5, 4, 6, 1 , 4, 3),
-         long = c(1, 2, 3, 4, 5, 6, 4, 1, 2, 5, 4, 8),
-         city = c('arafa','makka','makka','arafa','arafa','makka','makka','arafa','arafa','makka','arafa','arafa'),
-         time = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
-         pop = c(3, 3, 3, 3, 3, 3,3,3,3,3,3,3)
-         )
-
-       #print(MyData)
-       p <- ggplot(data = MyData, aes(lat, long ,col='red')) +
-         geom_point(data = MyData,aes(size = 3, frame = time , ids = id))+
-         scale_x_log10()
-       p <- ggplotly(p)
-       return(p)
-    })
+  output$faclt<-renderLeaflet({
+    data=add_places_capacity('hospital','21.42287','39.826206')
+    #print(data)
+    m <- leaflet()
+    m <- addTiles(m)
+    le=length(data)
+    x=data.matrix(data)
+    print(x)
+    
+    #barplot(c(1,2,3))
+  })
   output$street<-renderLeaflet({
       remove_old_warn()
       find_warning()
