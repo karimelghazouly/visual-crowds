@@ -5,10 +5,11 @@ library(reticulate)
 library(shinyjs)
 library(gapminder)
 library(leaflet)
-
+library(profvis)
 source_python('python_modules/data_handler.py')
 ui <- fluidPage(
   theme='theme.css',
+  includeCSS('www/styles.css'),
   h1('Visual Crowds',style='margin-left:45%',class="text-success"),
   tabsetPanel(id='tabs',
               tabPanel(h4('Street View'),
