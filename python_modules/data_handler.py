@@ -1,6 +1,7 @@
 import googlemaps as gmaps
 import pandas as pd
 import random
+import mpu
 
 def get_adress_and_city(lat, lng):
     """Returns street address of the given location.
@@ -43,6 +44,7 @@ def manipulate_geo_data():
         csv.loc[i,'lat'], csv.loc[rand_no, 'lat'] = csv.loc[rand_no, 'lat'], csv.loc[i,'lat']
         csv.loc[i, 'lng'], csv.loc[rand_no, 'lng'] = csv.loc[rand_no, 'lng'], csv.loc[i, 'lng']
 
+    csv.set_index('id', inplace=True)
     csv.to_csv('csv_work/geo_data.csv')
     return csv
 
@@ -75,3 +77,43 @@ def get_location_by_id(id):
     lng = geo_csv.loc[geo_csv['id'] == id]['lng'][id]
 
     return lat, lng
+
+def get_places(type, lat, lng):
+    """Returns a list of places of given type, with how crowded they are.
+    :param type: String of the place type.
+    :param lat: Targeted city latitude.
+    :param lng: Targeted city longitude.
+    :return: List of dicts containing place name, lat, lng.
+    """
+    api = gmaps.Client(key='AIzaSyBRTtk15JKrytkz540PDf7ibEwIzhdKPa4')
+    results = api.places_nearby(location=(lat, lng), radius=1000, type=type)
+
+    # Create list with hospitals nearby
+    places = []
+    for result in results['results']:
+        place = {
+            'name' : result['name'],
+            'lat' : result['geometry']['location']['lat'],
+            'lng': result['geometry']['location']['lng'],
+            'people':0
+        }
+        places.append(place)
+
+    return places
+
+def add_places_capacity(type, lat, lng):
+    """Count number of people in every place.
+    :return: List of dicts containing place name, lat, lng, people.
+    """
+    csv = pd.read_csv('csv_work/geo_data.csv')
+    places = get_places(type, lat, lng)
+    for place in places:
+        for i, row in csv.iterrows():
+            dist = mpu.haversine_distance((place['lat'],place['lng']), (row['lat'],row['lng']))
+            if dist < 0.1:
+                place['people'] += 1
+
+    return places
+
+
+add_places_capacity('hospital', 21.422487, 39.826206)
