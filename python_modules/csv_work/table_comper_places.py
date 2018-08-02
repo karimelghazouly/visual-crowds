@@ -4,11 +4,11 @@ import csv
 
 
 def compare_place_to_people_in():
-    print("first")
+    #print("first")
     s = pd.read_csv('python_modules/csv_work/geo_data.csv')
     Geo = s
     city = Geo.iloc[:,3].values
-    print(city)
+    #print(city)
     comper = pd.read_csv('python_modules/csv_work/table.csv')
     place = comper.iloc[:,0].values
     capicty_max = comper.iloc[:,1].values
@@ -17,12 +17,12 @@ def compare_place_to_people_in():
     for i in range(4):
         k = 0
         for j in range(len(city)):
-            print(place[i],city[j])
+            #print(place[i],city[j])
             if place[i] == city[j]:
                 k+=1
         x.append(k)
         
-    print(x)
+    #print(x)
 #list append
 
     #Comperting

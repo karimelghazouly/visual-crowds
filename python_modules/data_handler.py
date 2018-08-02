@@ -1,4 +1,4 @@
-#import googlemaps as gmaps
+import googlemaps as gmaps
 import pandas as pd
 import os
 import random
@@ -107,7 +107,7 @@ def add_places_capacity(type, lat, lng):
     """Count number of people in every place.
     :return: List of dicts containing place name, lat, lng, people.
     """
-    csv = pd.read_csv('csv_work/geo_data.csv')
+    csv = pd.read_csv('python_modules/csv_work/geo_data.csv')
     places = get_places(type, lat, lng)
     for place in places:
         for i, row in csv.iterrows():
@@ -118,4 +118,4 @@ def add_places_capacity(type, lat, lng):
     return places
 
 
-add_places_capacity('hospital', 21.422487, 39.826206)
+#add_places_capacity('hospital', 21.422487, 39.826206)
