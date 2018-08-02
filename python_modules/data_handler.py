@@ -1,10 +1,7 @@
 #import googlemaps as gmaps
 import pandas as pd
-<<<<<<< HEAD
 import os
-=======
 import random
->>>>>>> b260db6be8fcaf191fb1efb04f51cd96b35b3af8
 
 def get_adress_and_city(lat, lng):
     """Returns street address of the given location.
