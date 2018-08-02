@@ -2,8 +2,12 @@ v<-reactiveValues(l1=39.7,lo1=21.3,l2=39.9,lo2=21.5)
 source_python('python_modules/data_handler.py')
 MyData <- read.csv(file="/home/karim/WorkSpace/R/Visual Crowds/Hajj Hackathon/python_modules/csv_work/Info.csv", header=TRUE, sep=",")
 leng = nrow(MyData)
-
+personIcon=makeIcon(
+  iconUrl = 'www/icons/circle1.png',
+  iconWidth = 10, iconHeight = 10
+)
 server <- function(input, output,session) {
+  autoInvalidate <- reactiveTimer(200)
   observeEvent(input[["Makka"]],{
     v[["l1"]] =39.825000
     v[["lo1"]] =21.421300
@@ -17,7 +21,6 @@ server <- function(input, output,session) {
     v[["l2"]] =39.9841
     v[["lo2"]] =21.3549
   })
-  #[21.4146,39.8946]]
   observeEvent(input[["Mena"]],{
     v[["l1"]] =39.8880
     v[["lo1"]] =21.4172
@@ -49,12 +52,16 @@ server <- function(input, output,session) {
        return(p)
     })
     output$street<-renderLeaflet({
+      autoInvalidate()
+      manipulate_geo_data()
       data <- read.csv(file="python_modules/csv_work/geo_data.csv", header=TRUE, sep=",")
-      print(data)
+      #print(data)
       m <- leaflet()
       m <- addTiles(m)
-      m <- addMarkers(m, lng=data[['lng']], lat=data[['lat']], popup=data[['long']],   clusterOptions = markerClusterOptions())
-      m <-fitBounds(m,v[["l1"]],v[["lo1"]],v[["l2"]],v[["lo2"]])
+    # m <- addMarkers(m,lng = data[['lng']],lat=data[['lat']],popup = data[['lng']],icon = personIcon)
+      m <- addMarkers(m, lng=data[['lng']], lat=data[['lat']], popup=data[['lng']],   clusterOptions = markerClusterOptions(zoomToBoundsOnClick = T,spiderfyOnMaxZoom = F),icon = personIcon )
+      m <- addCircles(m,lng=data[['lng']], lat=data[['lat']])
+      m <- fitBounds(m,v[["l1"]],v[["lo1"]],v[["l2"]],v[["lo2"]])
       return(m)
     })
     output$piligrim<-renderLeaflet({
