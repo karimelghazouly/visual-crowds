@@ -1,5 +1,6 @@
 import googlemaps as gmaps
 import pandas as pd
+import random
 
 def get_adress_and_city(lat, lng):
     """Returns street address of the given location.
@@ -32,16 +33,28 @@ def read_fill_person_geo():
     csv.to_csv('csv_work/geo_data.csv')
     return csv
 
+def manipulate_geo_data():
+    """Shuffles data locations."""
+    csv = pd.read_csv('csv_work/geo_data.csv')
+
+    for i in range(0, len(csv)):
+        # Swap current row's location with random row
+        rand_no = random.randint(0,len(csv)-1)
+        csv.loc[i,'lat'], csv.loc[rand_no, 'lat'] = csv.loc[rand_no, 'lat'], csv.loc[i,'lat']
+        csv.loc[i, 'lng'], csv.loc[rand_no, 'lng'] = csv.loc[rand_no, 'lng'], csv.loc[i, 'lng']
+
+    csv.to_csv('csv_work/geo_data.csv')
+
 def get_location_by_name(name):
     """Returns location of a user given his name.
     :param name: String of the user's full name.
     :return: Pair of (latitude, longitude).
     """
     info_csv = pd.read_csv('csv_work/info.csv')
-    # Get user's id from info file
-    id = info_csv.loc[info_csv['name'] == 'ahmad']['id'].values[0]
-
     geo_csv = pd.read_csv('csv_work/geo_data.csv')
+
+    # Get user's id from info file
+    id = info_csv.loc[info_csv['name'] == name]['id'].values[0]
 
     # Get lat and lng from geo_data file using user's id
     lat = geo_csv.loc[geo_csv['id'] == id]['lat'][id]
@@ -61,6 +74,3 @@ def get_location_by_id(id):
     lng = geo_csv.loc[geo_csv['id'] == id]['lng'][id]
 
     return lat, lng
-
-
-
