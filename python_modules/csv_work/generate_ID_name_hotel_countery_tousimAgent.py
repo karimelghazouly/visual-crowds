@@ -1,11 +1,14 @@
 from faker import Faker
 import csv
+import random
 fake = Faker()
 with open('Info.csv', 'w') as csvfile:
     fieldnames = ['id', 'name', 'hotel','country','tourismAgent']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
-    for i in range(1,10):
-        writer.writerow({'id': str(i), 'name': fake.name(), 'hotel': fake.name(),'country': fake.country(),'tourismAgent':"nan",})
+    hotels = ["agyad", "abrag makka" , "Mariden" , "el haramen ","Hilton Makkah","Dar Al Ghufran"]
+    Agents =["FreeHajj", "TravelCairoAgent","TravelUSAAgent","Travel Local Hajj"]
+    for i in range(1,80):
+        writer.writerow({'id': str(i), 'name': fake.name(), 'hotel': str(hotels[random.randrange(0,5)]),'country': fake.country(),'tourismAgent':str(Agents[random.randrange(0,3)]),})
 
 print("Writing complete")
