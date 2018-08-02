@@ -17,7 +17,7 @@ def compare_place_to_people_in(data):
         k = 0
         for j in range(len(city)):
             if place[i] == city[j]:
-                k+=1
+                k +=1
         x.append(k)
 #list append
 
@@ -50,4 +50,27 @@ def compare_place_to_people_in(data):
     return complete
 
 
-x=compare_place_to_people_in(s)
+def find_number_in_city(city_name):
+
+    comper = pd.read_csv('table.csv')
+    place = comper.iloc[:,0].values
+    capicty_max = comper.iloc[:,1].values
+    load_city = s.iloc[:,3].values
+    c=0
+    for i in range(len(load_city)):
+        if city_name == load_city[i]:
+            c+=1
+    for x in range(len(place)):
+
+        if place[x]==city_name and capicty_max[x]>=c:
+            # NO flow
+            return [c,capicty_max[x]]
+    else:
+        return None
+
+
+
+
+f=find_number_in_city("makka")
+print(f)
+#x=compare_place_to_people_in(s)
