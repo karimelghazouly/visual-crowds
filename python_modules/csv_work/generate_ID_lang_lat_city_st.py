@@ -8,7 +8,7 @@ fake = Faker('ar_SA')
 x=0
 p=0
 for i in range(4):
-    for j in range(100):
+    for j in range(50):
         latitude,longitude = lng_lat(land[i][0],land[i][1])
         print(len(latitude))
         with open('geo_data.csv', 'a') as csvfile:
