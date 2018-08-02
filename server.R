@@ -46,8 +46,8 @@ server <- function(input, output,session) {
     })
     output$street<-renderLeaflet({
       data <- read.csv(file="/home/karim/geo_data.csv", header=TRUE, sep=",")
-      print(data)
-      print(data[['long']])
+      #print(data)
+      #print(data[['long']])
       m <- leaflet()
       m <- addTiles(m)
       m <- addMarkers(m, lng=data[['long']], lat=data[['lat']], popup=data[['long']],   clusterOptions = markerClusterOptions())
