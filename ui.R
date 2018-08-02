@@ -6,6 +6,7 @@ library(shinyjs)
 library(gapminder)
 library(leaflet)
 
+source_python('python_modules/data_handler.py')
 ui <- fluidPage(
   theme='theme.css',
   h1('Visual Crowds',style='margin-left:45%',class="text-success"),
@@ -20,7 +21,7 @@ ui <- fluidPage(
               tabPanel(h4('Search For Pilgrim'),
                        fixedRow(
                          column(2,radioButtons('search_choice',h4("Search by : "),choices = c("ID","Name"))),
-                         column(4,textInput('input-srch',h4('Enter Value :')),actionButton('srch','Search',class="btn btn-success"))),
+                         column(4,textInput('input-srch',h4('Enter Value :')))),
                        leafletOutput('piligrim')
               )
   ),
