@@ -55,8 +55,8 @@ def compare_place_to_people_in():
 
 
 def find_number_in_city(city_name):
-    s = pd.read_csv('geo_data.csv')
-    comper = pd.read_csv('table.csv')
+    s = pd.read_csv('python_modules/csv_work/geo_data.csv')
+    comper = pd.read_csv('python_modules/csv_work/table.csv')
     place = comper.iloc[:,0].values
     capicty_max = comper.iloc[:,1].values
     load_city = s.iloc[:,3].values
