@@ -87,7 +87,7 @@ server <- function(input, output,session) {
     m <- leaflet()
     m <- addTiles(m)
     le=length(data)
-    x=data.matrix(data)
+    x=(data)
     print(x)
     
     #barplot(c(1,2,3))
@@ -96,7 +96,7 @@ server <- function(input, output,session) {
       remove_old_warn()
       find_warning()
       autoInvalidate()
-      #manipulate_geo_data()
+      manipulate_geo_data()
       data <- read.csv(file="python_modules/csv_work/geo_data.csv", header=TRUE, sep=",")
       #print(data)
       m <- leaflet()
