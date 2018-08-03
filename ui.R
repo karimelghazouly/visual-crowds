@@ -7,6 +7,7 @@ library(gapminder)
 library(leaflet)
 library(profvis)
 library(shinyjs)
+
 source_python('python_modules/data_handler.py')
 source_python('python_modules/csv_work/table_comper_places.py')
 ui <- fluidPage(
@@ -20,7 +21,8 @@ ui <- fluidPage(
                        actionButton('Makka',h3('Makka'),class="btn btn-primary"),
                        actionButton('Arafa',h3('Arafa'),class="btn btn-primary"),
                        actionButton('Mena',h3('Mina'),class="btn btn-primary"),
-                       leafletOutput('street')
+                       leafletOutput('street'),
+                       actionButton("refresh","refresh",class="btn btn-primary")
               ),
               tabPanel(id='srching',h4('Search For Pilgrim'),
                        fixedRow(
