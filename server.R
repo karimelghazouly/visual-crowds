@@ -1,4 +1,4 @@
-v<-reactiveValues(l1=39.7,lo1=21.3,l2=39.9,lo2=21.5)
+v<-reactiveValues(l1=39.7,lo1=21.3,l2=39.9,lo2=21.5,z=2,vl=0,vlo=1)
 source_python('python_modules/data_handler.py')
 source_python('python_modules/csv_work/table_comper_places.py')
 MyData <- read.csv(file="/home/karim/WorkSpace/R/Visual Crowds/Hajj Hackathon/python_modules/csv_work/Info.csv", header=TRUE, sep=",")
@@ -9,7 +9,8 @@ personIcon=makeIcon(
   iconUrl = 'www/icons/circle1.png',
   iconWidth = 10, iconHeight = 10
 )
-
+lst_clck_lat=0
+lst_clck_lng=1
 find_warning = function()
 {
   prob=compare_place_to_people_in()
@@ -49,11 +50,13 @@ add_warning=function(place,max,cur)
   idx<<-idx+1
 }
 server <- function(input, output,session) {
+  autoInvalidate <- reactiveTimer(10000)
   observe({
+    
     if(input[["tabs"]]=="<h4>Facilities</h4>")hide('anal')
     else show('anal')
+    #print("observing")
   })
-  autoInvalidate <- reactiveTimer(5000)
   observeEvent(input[["Makka"]],{
     v[["l1"]] =39.825000
     v[["lo1"]] =21.421300
@@ -81,31 +84,49 @@ server <- function(input, output,session) {
   })
   observeEvent(input[["insert"]],{
   })
-  output$faclt<-renderLeaflet({
+  output$faclt<-renderPlot({
+    par(bg='#222222')
     data=add_places_capacity('hospital','21.42287','39.826206')
-    #print(data)
-    m <- leaflet()
-    m <- addTiles(m)
     le=length(data)
-    x=(data)
-    print(x)
-    
-    #barplot(c(1,2,3))
+    print(le)
+    names=c()
+    heig=c()
+    for(i in 1:(le-1))
+    {
+      names=c(names,data[[i]][1])
+      heig=c(heig,data[[i]][[4]])
+    }
+    barplot(heig,names.arg = names,ylab="Persons",xlab = "Hospital Name",col = '#226F57',col.lab='white',col.axis='white')
   })
   output$street<-renderLeaflet({
-      remove_old_warn()
-      find_warning()
-      autoInvalidate()
-      manipulate_geo_data()
-      data <- read.csv(file="python_modules/csv_work/geo_data.csv", header=TRUE, sep=",")
-      #print(data)
-      m <- leaflet()
-      m <- addTiles(m)
-    # m <- addMarkers(m,lng = data[['lng']],lat=data[['lat']],popup = data[['lng']],icon = personIcon)
-      m <- addMarkers(m, lng=data[['lng']], lat=data[['lat']], popup=data[['lng']],   clusterOptions = markerClusterOptions(zoomToBoundsOnClick = T,spiderfyOnMaxZoom = F),icon = personIcon )
-      m <- addCircles(m,lng=data[['lng']], lat=data[['lat']])
-      m <- fitBounds(m,v[["l1"]],v[["lo1"]],v[["l2"]],v[["lo2"]])
-      return(m)
+     autoInvalidate() 
+    bounds=input$street_bounds  
+    lo1=0
+    lo2=0
+    l1=0
+    l2=0
+    if(!is.null(bounds)) 
+    {
+      lo1=bounds$north
+      lo2=bounds$south
+      l1=bounds$west
+      l2=bounds$east
+    }
+    remove_old_warn()
+    find_warning()
+    #manipulate_geo_data()
+    data <- read.csv(file="python_modules/csv_work/geo_data.csv", header=TRUE, sep=",")
+    m <- leaflet()
+    m <- addTiles(m)
+    m <- addMarkers(m, lng=data[['lng']], lat=data[['lat']], popup=data[['lng']],   clusterOptions = markerClusterOptions(zoomToBoundsOnClick = T,spiderfyOnMaxZoom = F),icon = personIcon )
+    m <- addCircles(m,lng=data[['lng']], lat=data[['lat']])
+    #print(v[['l1']])
+    #print(v[['`']])
+    #print(v[['l2']])
+    #print(v[['lo2']])
+    #if(l1!=0)m <- fitBounds(m,l1,lo1,l2,lo2)
+    #m <- setView(m,v[['vlo']],v[['vl']],zoom=v[['z']])
+    return(m)
     })
   output$piligrim<-renderLeaflet({
       if(input[["search_choice"]]=="ID")

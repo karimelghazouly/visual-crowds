@@ -19,7 +19,7 @@ ui <- fluidPage(
                        actionButton('OverAll',h3('OverAll'),class="btn btn-primary"),
                        actionButton('Makka',h3('Makka'),class="btn btn-primary"),
                        actionButton('Arafa',h3('Arafa'),class="btn btn-primary"),
-                       actionButton('Mena',h3('Mena'),class="btn btn-primary"),
+                       actionButton('Mena',h3('Mina'),class="btn btn-primary"),
                        leafletOutput('street')
               ),
               tabPanel(id='srching',h4('Search For Pilgrim'),
@@ -29,7 +29,7 @@ ui <- fluidPage(
                        leafletOutput('piligrim')
               ),
               tabPanel(id='fac',h4("Facilities"),
-                       leafletOutput('faclt')
+                       plotOutput('faclt')
                        )
   ),
   div( id='anal',class='jumbotron',style="margin-top:5%;",
