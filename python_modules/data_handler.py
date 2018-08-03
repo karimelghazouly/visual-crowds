@@ -96,12 +96,13 @@ def get_places(type, lat, lng):
     # Create list with hospitals nearby
     places = []
     for result in results['results']:
-        place = {
-            'name' : result['name'],
-            'lat' : result['geometry']['location']['lat'],
-            'lng': result['geometry']['location']['lng'],
-            'people':0
-        }
+        # Index 0:name, 1:lat, 2:lng, 3:people
+        place = [
+            result['name'],
+            result['geometry']['location']['lat'],
+            result['geometry']['location']['lng'],
+            0
+        ]
         places.append(place)
 
     return places
@@ -114,11 +115,10 @@ def add_places_capacity(type, lat, lng):
     places = get_places(type, lat, lng)
     for place in places:
         for i, row in csv.iterrows():
-            dist = mpu.haversine_distance((place['lat'],place['lng']), (row['lat'],row['lng']))
+            dist = mpu.haversine_distance((place[1],place[2]), (row['lat'],row['lng']))
             if dist < 0.1:
-                place['people'] += 1
+                place[3] += 1
 
     return places
-
 
 
