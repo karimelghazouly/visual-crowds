@@ -37,14 +37,14 @@ def read_fill_person_geo():
 
 def manipulate_geo_data():
     """Shuffles data locations."""
-    csv = pd.read_csv('csv_work/geo_data.csv')
+    csv = pd.read_csv('python_modules/csv_work/geo_data.csv')
 
     for i in range(0, len(csv)-1):
         csv.loc[i, 'lat'] += 0.00000005
         csv.loc[i, 'lng'] += 0.00000005
 
     csv.set_index('id', inplace=True)
-    csv.to_csv('csv_work/geo_data.csv')
+    csv.to_csv('python_modules/csv_work/geo_data.csv')
     return csv
 
 def get_location_by_name(name):

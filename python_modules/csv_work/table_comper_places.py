@@ -75,6 +75,6 @@ def find_number_in_city(city_name):
 
 
 
-f=find_number_in_city("makka")
-print(f)
+#f=find_number_in_city("makka")
+#print(f)
 #x=compare_place_to_people_in(s)
