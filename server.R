@@ -1,9 +1,11 @@
-v<-reactiveValues(l1=39.7,lo1=21.3,l2=39.9,lo2=21.5,z=2,vl=0,vlo=1)
+v<-reactiveValues(l1=39.7,lo1=21.3,l2=39.9,lo2=21.5,z=2,vl=0,vlo=1,change=1)
 source_python('python_modules/data_handler.py')
 source_python('python_modules/csv_work/table_comper_places.py')
 MyData <- read.csv(file="/home/karim/WorkSpace/R/Visual Crowds/Hajj Hackathon/python_modules/csv_work/Info.csv", header=TRUE, sep=",")
 leng = nrow(MyData)
 idx=1
+idx2=1
+ss=1
 useShinyjs()
 personIcon=makeIcon(
   iconUrl = 'www/icons/circle1.png',
@@ -31,7 +33,30 @@ remove_old_warn = function()
   }
   idx<<-1
 }
+remove_old_insi = function()
+{
+  for(i in 1:(idx2-1))
+  {
+    sel=paste("#insights",i,sep='')
+    removeUI(
+      selector = sel
+    )    
+  }
+  idx2<<- 1
+}
 
+find_insi=function(){
+  names=c('makka','mena','muzdalifah','arafa')
+  for( i in names){
+    ret=find_number_in_city(i)
+    if(!is.null(ret))
+    {
+      add_insi(i,ret[2],ret[1])
+
+    }
+    
+  }
+}
 add_warning=function(place,max,cur)
 {
   insertUI(
@@ -48,6 +73,25 @@ add_warning=function(place,max,cur)
     )
   )
   idx<<-idx+1
+}
+add_insi=function(place,max,cur)
+{
+  
+  insertUI(
+    selector = "#insights",
+    where = "afterEnd",
+    ui=div(class="card text-white bg-success mb-3",
+           style="max-width: 20rem; border-radius:10px; margin-left:25px;",
+           div(class="card-body",
+               h4(class="card-title",icon('check-circle',lib = "font-awesome",class="fa-2x"),place),
+               p(class="card-text",paste('Every thing is good at ',place,' it can 
+handle',max,'and now it has',cur,'pilgrims'))
+           ),
+           actionButton('W1','View',style="margin-left:40%;"),
+           id=paste('insights',idx2,sep='')
+    )
+  )
+  idx2<<- idx2+1
 }
 server <- function(input, output,session) {
   autoInvalidate <- reactiveTimer(10000)
@@ -84,6 +128,25 @@ server <- function(input, output,session) {
   })
   observeEvent(input[["insert"]],{
   })
+  observeEvent(input[["refresh"]],{
+    print("Refreshing")
+    remove_old_warn()
+    remove_old_insi()
+    find_warning()
+    find_insi()
+    manipulate_geo_data()
+    bounds=input$street_bounds
+    if(!is.null(bounds)&&bounds$west!=isolate(v[["l1"]])&&bounds$east!=isolate(v[["l2"]])&&bounds$south!=isolate(v[["lo1"]])&&bounds$north!=isolate(v[["lo2"]]))
+    {
+      v[["l1"]]=bounds$west
+      v[["l2"]]=bounds$east
+      v[["lo1"]]=bounds$south
+      v[["lo2"]]=bounds$north
+    }
+    print("done")
+    v[["change"]]=ss+1
+    ss<<- ss +1
+  })
   output$faclt<-renderPlot({
     par(bg='#222222')
     data=add_places_capacity('hospital','21.42287','39.826206')
@@ -99,34 +162,20 @@ server <- function(input, output,session) {
     barplot(heig,names.arg = names,ylab="Persons",xlab = "Hospital Name",col = '#226F57',col.lab='white',col.axis='white')
   })
   output$street<-renderLeaflet({
-     autoInvalidate() 
-    bounds=input$street_bounds  
-    lo1=0
-    lo2=0
-    l1=0
-    l2=0
-    if(!is.null(bounds)) 
+     
+    #autoInvalidate()
+    print(v[["change"]])
+    if(v[["change"]])
     {
-      lo1=bounds$north
-      lo2=bounds$south
-      l1=bounds$west
-      l2=bounds$east
+      data <- read.csv(file="python_modules/csv_work/geo_data.csv", header=TRUE, sep=",")
+      m <- leaflet()
+      m <- addTiles(m)
+      m <- addMarkers(m, lng=data[['lng']], lat=data[['lat']], popup=data[['lng']],   clusterOptions = markerClusterOptions(zoomToBoundsOnClick = T,spiderfyOnMaxZoom = F),icon = personIcon )
+      m <- addCircles(m,lng=data[['lng']], lat=data[['lat']])
+      m <- fitBounds(m,isolate(v[["l1"]]),isolate(v[["lo1"]]),isolate(v[["l2"]]),isolate(v[["lo2"]]))
+      return(m)  
     }
-    remove_old_warn()
-    find_warning()
-    #manipulate_geo_data()
-    data <- read.csv(file="python_modules/csv_work/geo_data.csv", header=TRUE, sep=",")
-    m <- leaflet()
-    m <- addTiles(m)
-    m <- addMarkers(m, lng=data[['lng']], lat=data[['lat']], popup=data[['lng']],   clusterOptions = markerClusterOptions(zoomToBoundsOnClick = T,spiderfyOnMaxZoom = F),icon = personIcon )
-    m <- addCircles(m,lng=data[['lng']], lat=data[['lat']])
-    #print(v[['l1']])
-    #print(v[['`']])
-    #print(v[['l2']])
-    #print(v[['lo2']])
-    #if(l1!=0)m <- fitBounds(m,l1,lo1,l2,lo2)
-    #m <- setView(m,v[['vlo']],v[['vl']],zoom=v[['z']])
-    return(m)
+    
     })
   output$piligrim<-renderLeaflet({
       if(input[["search_choice"]]=="ID")
