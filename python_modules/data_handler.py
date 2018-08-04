@@ -40,8 +40,8 @@ def manipulate_geo_data():
     csv = pd.read_csv('python_modules/csv_work/geo_data.csv')
 
     for i in range(0, len(csv)-1):
-        csv.loc[i, 'lat'] += 0.00000005
-        csv.loc[i, 'lng'] += 0.00000005
+        csv.loc[i, 'lat'] += random.uniform(-0.000005,0.000005)
+        csv.loc[i, 'lng'] += random.uniform(-0.000005,0.000005)
 
     csv.set_index('id', inplace=True)
     csv.to_csv('python_modules/csv_work/geo_data.csv')
