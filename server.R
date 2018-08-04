@@ -6,6 +6,10 @@ leng = nrow(MyData)
 idx=1
 idx2=1
 ss=1
+l1=39.7
+lo1=21.3
+l2=39.9
+lo2=21.5
 useShinyjs()
 personIcon=makeIcon(
   iconUrl = 'www/icons/circle1.png',
@@ -94,58 +98,62 @@ handle',max,'and now it has',cur,'pilgrims'))
   idx2<<- idx2+1
 }
 server <- function(input, output,session) {
-  autoInvalidate <- reactiveTimer(10000)
+  autoInvalidate <- reactiveTimer(30000)
   observe({
-    
+    bounds=input$street_bounds
+    print(bounds)
+    if(!is.null(bounds)&&bounds$west!=isolate(v[["l1"]])&&bounds$east!=isolate(v[["l2"]])&&bounds$south!=isolate(v[["lo1"]])&&bounds$north!=isolate(v[["lo2"]]))
+    {
+      l1<<- bounds$west
+      l2<<- bounds$east
+      lo1<<- bounds$south
+      lo2<<- bounds$north
+    }
     if(input[["tabs"]]=="<h4>Facilities</h4>")hide('anal')
     else show('anal')
-    #print("observing")
   })
   observeEvent(input[["Makka"]],{
-    v[["l1"]] =39.825000
-    v[["lo1"]] =21.421300
-    v[["l2"]] =39.827260
-    v[["lo2"]] =21.426360
+    l1 <<- 39.825000
+    lo1 <<-21.421300
+    l2 <<- 39.827260
+    lo2 <<- 21.426360
+    v[["change"]]=ss+1
+    ss<<- ss+1
   })
   observeEvent(input[["Arafa"]],{
     #21.3549, 39.9841
-    v[["l1"]] =39.9840
-    v[["lo1"]] =21.3548
-    v[["l2"]] =39.9841
-    v[["lo2"]] =21.3549
+    l1<<-39.9840
+    lo1<<- 21.3548
+    l2 <<- 39.9841
+    lo2<<- 21.3549
+    v[["change"]]=ss+1
+    ss<<- ss+1
   })
   observeEvent(input[["Mena"]],{
-    v[["l1"]] =39.8880
-    v[["lo1"]] =21.4172
-    v[["l2"]] =39.8939
-    v[["lo2"]] =21.4172
+    l1<<-39.8880
+    lo1<<- 21.4172
+    l2<<-39.8939
+    lo2<<- 21.4172
+    v[["change"]]=ss+1
+    ss<<- ss+1
   })
   observeEvent(input[["OverAll"]],{
-    v[["l1"]] =39.7
-    v[["lo1"]] =21.3
-    v[["l2"]] =39.9
-    v[["lo2"]] =21.5
+    l1 <<-39.7
+    lo1 <<- 21.3
+    l2 <<- 39.9
+    lo2 <<- 21.5
+    v[["change"]]=ss+1
+    ss<<- ss+1
   })
   observeEvent(input[["insert"]],{
   })
   observeEvent(input[["refresh"]],{
-    print("Refreshing")
+    autoInvalidate()
     remove_old_warn()
     remove_old_insi()
     find_warning()
     find_insi()
     manipulate_geo_data()
-    bounds=input$street_bounds
-    if(!is.null(bounds)&&bounds$west!=isolate(v[["l1"]])&&bounds$east!=isolate(v[["l2"]])&&bounds$south!=isolate(v[["lo1"]])&&bounds$north!=isolate(v[["lo2"]]))
-    {
-      v[["l1"]]=bounds$west
-      v[["l2"]]=bounds$east
-      v[["lo1"]]=bounds$south
-      v[["lo2"]]=bounds$north
-    }
-    print("done")
-    v[["change"]]=ss+1
-    ss<<- ss +1
   })
   output$faclt<-renderPlot({
     par(bg='#222222')
@@ -162,9 +170,13 @@ server <- function(input, output,session) {
     barplot(heig,names.arg = names,ylab="Persons",xlab = "Hospital Name",col = '#226F57',col.lab='white',col.axis='white')
   })
   output$street<-renderLeaflet({
-     
-    #autoInvalidate()
-    print(v[["change"]])
+    autoInvalidate()
+    remove_old_warn()
+    remove_old_insi()
+    find_warning()
+    find_insi()
+    manipulate_geo_data()
+    #print(v[["change"]])
     if(v[["change"]])
     {
       data <- read.csv(file="python_modules/csv_work/geo_data.csv", header=TRUE, sep=",")
@@ -172,7 +184,7 @@ server <- function(input, output,session) {
       m <- addTiles(m)
       m <- addMarkers(m, lng=data[['lng']], lat=data[['lat']], popup=data[['lng']],   clusterOptions = markerClusterOptions(zoomToBoundsOnClick = T,spiderfyOnMaxZoom = F),icon = personIcon )
       m <- addCircles(m,lng=data[['lng']], lat=data[['lat']])
-      m <- fitBounds(m,isolate(v[["l1"]]),isolate(v[["lo1"]]),isolate(v[["l2"]]),isolate(v[["lo2"]]))
+      m <- fitBounds(m,l1,lo1,l2,lo2)
       return(m)  
     }
     
