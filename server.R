@@ -1,7 +1,7 @@
 v<-reactiveValues(l1=39.7,lo1=21.3,l2=39.9,lo2=21.5,z=2,vl=0,vlo=1,change=1)
 source_python('python_modules/data_handler.py')
 source_python('python_modules/csv_work/table_comper_places.py')
-MyData <- read.csv(file="/home/karim/WorkSpace/R/Visual Crowds/Hajj Hackathon/python_modules/csv_work/Info.csv", header=TRUE, sep=",")
+MyData <- read.csv(file="python_modules/csv_work/Info.csv", header=TRUE, sep=",")
 leng = nrow(MyData)
 idx=1
 idx2=1
@@ -101,7 +101,6 @@ server <- function(input, output,session) {
   autoInvalidate <- reactiveTimer(30000)
   observe({
     bounds=input$street_bounds
-    print(bounds)
     if(!is.null(bounds)&&bounds$west!=isolate(v[["l1"]])&&bounds$east!=isolate(v[["l2"]])&&bounds$south!=isolate(v[["lo1"]])&&bounds$north!=isolate(v[["lo2"]]))
     {
       l1<<- bounds$west
@@ -159,7 +158,6 @@ server <- function(input, output,session) {
     par(bg='#222222')
     data=add_places_capacity('hospital','21.42287','39.826206')
     le=length(data)
-    print(le)
     names=c()
     heig=c()
     for(i in 1:(le-1))
@@ -176,7 +174,6 @@ server <- function(input, output,session) {
     find_warning()
     find_insi()
     manipulate_geo_data()
-    #print(v[["change"]])
     if(v[["change"]])
     {
       data <- read.csv(file="python_modules/csv_work/geo_data.csv", header=TRUE, sep=",")
